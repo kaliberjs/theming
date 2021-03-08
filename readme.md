@@ -15,7 +15,10 @@ yarn add @kaliber/theming
 To use theming in your components, wrap your app in the `ThemesProvider` component. You pass an object with all themes to its `themes` prop. If you use CSS modules, all you have to do is:
 
 ```jsx
-import { themes } from '/themes'
+import brand from '/themes/brand.css'
+import contrast from '/themes/contrast.css'
+
+const themes = { brand, contrast }
 
 <ThemesProvider {...{ themes }} default={themes.brand}>
   <App />
@@ -25,7 +28,7 @@ import { themes } from '/themes'
 Apply the styles in your components using the `useTheme()` hook. This hook gives you the current theme's style object, which you can then use alongside your regular styles:
 
 ```jsx
-function ThemedComponent({ children }) {
+function Component({ children }) {
   const theme = useTheme()
   
   return (
@@ -37,7 +40,7 @@ function ThemedComponent({ children }) {
 }
 ```
 
-To switch the theme, you can use the `ThemeProvider` component. Simply pass it the new theme, and all children will use this theme instead. To make this extra comfortable to use, you can define your own `Theme` components, which hardcode the themes.
+To change the theme, you can use the `ThemeProvider` component. Simply pass it the new theme, and all children will use this theme instead. To make this even more effortless, you can define your own `Theme` components, which provide a hardcoded theme.
 
 ```jsx
 function ThemeBrand({ children }) { 
@@ -46,12 +49,12 @@ function ThemeBrand({ children }) {
 }
 
 <ThemeBrand>
-  <ThemedComponent/>
+  <Component/>
 </ThemeBrand>
 ```
 
-### Working with Higgins and `colorSchemes`
-If you have a project where your React components are embedded within a Wordpress Higgins situation, you might already be using `colorSchemes` which adhere to `@kaliber/build`'s color scheme naming convention. It's possible to have this library interop with those styles, by defining a legacy default theme:
+### A note on working with Higgins and `@kaliber/build`'s `colorSchemes` convention
+If you have are running a project with React components embedded in your PHP pages, there's a chance you're already using `colorSchemes`, adhering to `@kaliber/build`'s colorScheme naming convention. It's possible to have this library interop with those styles, by defining a legacy default theme, which is implemented using these `colorScheme` classes:
 
 ```js
 const themes = {
@@ -59,9 +62,10 @@ const themes = {
   brand: brandTheme,
   contrast: contrastTheme,
   legacy: {
-    backgroundColor: 'colorScheme-backgroundColor',
     textColor: 'colorScheme-textColor',
-    accentColor: 'colorScheme-accentColor'
+    accentColor: 'colorScheme-accentColor',
+    focusColor: 'colorScheme-focusColor',
+    backgroundColor: 'colorScheme-backgroundColor',
   }
 }
 ```
@@ -74,11 +78,14 @@ import { themes } from '/themes'
 </ThemesProvider>
 ```
 
-You should avoid providinig the legacy theme to a ThemeProvider. This probably means you are nesting themes, which might cause trouble if your not using CSS modules.
+If you'd like your themed components to use another `colorScheme` than the default one you can wrap your component in a `div` with the relevant `colorScheme` class, just make sure not to nest those divs because there be dragons (it'll cause problems).
+
+*👉 To keep things simple, you should probably also avoid providing the legacy theme to a ThemeProvider. It'll work, but it could lead to strange situations where you can switch themes, but not colorSchemes (because you cannot nest those).*
 
 ## Example
+*👉 For a more complete example, check the example directory in the Github repo.*
 
-`themes/contrastTheme.css`
+`themes/contrast.css`
 ```css
 .color {
   color: var(--color-gray-100);
@@ -102,15 +109,23 @@ You should avoid providinig the legacy theme to a ThemeProvider. This probably m
 
 `themes/index.js`
 ```js
-import contrastTheme from '/themes/contrastTheme.css'
+import brand from './brand.css'
+import contrast from './contrast.css'
+
 export const themes = {
-  contrastTheme
+  brand,
+  contrast
 }
 ```
 
 `components/Theme.js`
 ```jsx
 import { useThemes, ThemeProvider } from '@kaliber/theming'
+
+export function ThemeBrand({ children }) {
+  const themes = useThemes()
+  return <ThemeProvider theme={themes.brand} {...{ children }} />
+}
 
 export function ThemeContrast({ children }) {
   const themes = useThemes()
@@ -120,7 +135,7 @@ export function ThemeContrast({ children }) {
 
 `components/Component.js`
 ```jsx
-import { useTheme } from '/components/theme/Theme'
+import { useTheme } from '/components/Theme'
 
 function Component() {
   const theme = useTheme()
@@ -155,14 +170,14 @@ Wrap this around your `App`. This enables the `useThemes` hook. This automatical
 | `default` (required) | The default theme (from the same object). |
 
 ## `useThemes`
-Returns the object with the available `themes`
+Returns the object with the available `themes`.
 
 ## `ThemeProvider`
 Wrap this around a subtree, to render all children in the theme passed to the `theme` prop.
 
 | Props | |
 | --- | --- |
-| `theme` (required) | An object containing one of the available `themes`. Use the `useThemes` hook to get a reference to the `themes` object. |
+| `theme` (required) | One of the available `theme` objects in `themes`. Use the `useThemes` hook to get a reference to the `themes` object. |
 
 ## `useTheme`
 Returns the current `theme` object.
