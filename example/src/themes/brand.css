@@ -7,7 +7,7 @@
 }
 
 .accentColor {
-  color: var(--color-gray-900);
+  color: var(--color-shocking-pink-accent);
 }
 
 .focusColor {
@@ -15,4 +15,4 @@
   &:focus {
     color: var(--color-gray-100);
   }
-}
+} 
