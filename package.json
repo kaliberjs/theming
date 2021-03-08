@@ -1,6 +1,6 @@
 {
-  "name": "@kaliber/library",
-  "version": "1.0.0",
+  "name": "@kaliber/theming",
+  "version": "0.0.0",
   "main": "index.js",
   "sideEffects": false,
   "publishConfig": {
@@ -18,6 +18,6 @@
   ],
   "private": false,
   "license": "MIT",
-  "description": "A short description",
-  "repository": "https://github.com/kaliberjs/library.git"
+  "description": "Provides convenient, nestable theming for you React components.",
+  "repository": "https://github.com/kaliberjs/theming.git"
 }

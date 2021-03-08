@@ -1,8 +1,8 @@
 import { useThemes, useTheme, ThemeProvider } from '@kaliber/theming'
 
-import defaultTheme from './default.module.css'
-import brandTheme from './brand.module.css'
-import contrastTheme from './contrast.module.css'
+import defaultTheme from './default.css'
+import brandTheme from './brand.css'
+import contrastTheme from './contrast.css'
 
 export const themes = {
   default: defaultTheme,
