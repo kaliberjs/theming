@@ -2,4 +2,8 @@
   position: absolute;
   margin: 20px;
   font-family: sans-serif;
+
+  & > :not(:first-child) {
+    margin-top: 2rem;
+  }
 }

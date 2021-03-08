@@ -4,6 +4,7 @@ import stylesheet from '@kaliber/build/lib/stylesheet'
 import polyfill from '@kaliber/build/lib/polyfill'
 
 import './index.css'
+import './reset.css'
 import './colorScheme.css'
 
 export default (
