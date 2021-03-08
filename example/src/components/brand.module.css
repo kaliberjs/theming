@@ -1,0 +1,18 @@
+.backgroundColor {
+  background-color: var(--color-shocking-pink);
+}
+
+.color {
+  color: var(--color-gray-100);
+}
+
+.accentColor {
+  color: var(--color-gray-100);
+}
+
+.focusColor {
+  &:hover,
+  &:focus {
+    color: var(--color-gray-100);
+  }
+}

@@ -1,0 +1,70 @@
+.colorScheme--default {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-700);
+  -webkit-font-smoothing: antialiased;
+}
+
+.colorScheme-backgroundColor {
+  background-color: var(--color-gray-100);
+}
+
+.colorScheme-color {
+  color: var(--color-gray-700);
+}
+
+.colorScheme-accentColor {
+  color: var(--color-shocking-pink);
+}
+
+.colorScheme-focusColor {
+  &:hover,
+  &:focus {
+    color: var(--color-shocking-pink);
+  }
+}
+
+.colorScheme--brand {
+  background-color: var(--color-shocking-pink);
+  color: var(--color-gray-100);
+  -webkit-font-smoothing: antialiased;
+
+  & .colorScheme-color {
+    color: var(--color-gray-100);
+  }
+
+  & .colorScheme-accentColor {
+    color: var(--color-gray-100);
+  }
+
+  & .colorScheme-focusColor {
+    &:hover,
+    &:focus {
+      color: var(--color-gray-100);
+    }
+  }
+}
+
+.colorScheme--contrast {
+  background-color: var(--color-gray-900);
+  color: var(--color-gray-100);
+  -webkit-font-smoothing: antialiased;
+
+  & .colorScheme-backgroundColor {
+    background-color: var(--color-gray-900);
+  }
+  
+  & .colorScheme-color {
+    color: var(--color-gray-100);
+  }
+
+  & .colorScheme-accentColor {
+    color: var(--color-shocking-pink);
+  }
+
+  & .colorScheme-focusColor {
+    &:hover,
+    &:focus {
+      color: var(--color-shocking-pink);
+    }
+  }
+}
