@@ -2,7 +2,7 @@
 Provides convenient, nestable theming for you React components.
 
 ## Motivation
-`@kaliber/theming` helps you build themable components, which automatically adapt to the theme they're used in. Nestable theming is traditionally a hairy CSS problem, which React's Context solves very elegantly.
+`@kaliber/theming` helps you build themable components, which automatically adapt to the theme they're used in. Nestable theming is traditionally a hairy CSS problem which React's Context helps you solve elegantly. This library is just a thin layer around such a Context, with a little bit of typing sprinkled into the mix. It aims to provide a common 'best practice'.
 
 ## Installation
 
@@ -12,20 +12,17 @@ yarn add @kaliber/theming
 
 ## Usage
 
-To use theming in your components, wrap your app in the `ThemesProvider` component. You pass an object with all themes to its `themes` prop. If you use CSS modules, all you have to do is:
+To use theming in your components, wrap your app in the `ThemeProvider` component. You provide it with a theme object, containing your theme properties, through the `theme` prop. If you use CSS modules, all you have to do is:
 
 ```jsx
-import brand from '/themes/brand.css'
-import contrast from '/themes/contrast.css'
+import brandTheme from '/themes/brand.css'
 
-const themes = { brand, contrast }
-
-<ThemesProvider {...{ themes }} default={themes.brand}>
-  <App />
-</ThemesProvider>
+<ThemeProvider theme={brandTheme}>
+  {children}
+</ThemeProvider>
 ```
 
-Apply the styles in your components using the `useTheme()` hook. This hook gives you the current theme's style object, which you can then use alongside your regular styles:
+Apply the styles in the provider's subtree using the `useTheme()` hook. You can use the returned `theme` object alongside your regular styles:
 
 ```jsx
 function Component({ children }) {
@@ -40,12 +37,11 @@ function Component({ children }) {
 }
 ```
 
-To change the theme, you can use the `ThemeProvider` component. Simply pass it the new theme, and all children will use this theme instead. To make this even more effortless, you can define your own `Theme` components, which provide a hardcoded theme.
+To change the theme, you can use the `ThemeProvider` component. Simply pass it the new theme, and all child components will now use this theme instead. To make this even more effortless you can define your own `Theme` components, which provide a hardcoded theme:
 
 ```jsx
 function ThemeBrand({ children }) { 
-  const themes = useThemes()
-  return <ThemeProvider theme={themes.brand} {...{ children }} />
+  return <ThemeProvider theme={brandTheme} {...{ children }} />
 }
 
 <ThemeBrand>
@@ -73,17 +69,15 @@ const themes = {
 ```jsx
 import { themes } from '/themes'
 
-<ThemesProvider {...{ themes }} default={themes.legacy}>
+<ThemeProvider theme={themes.legacy}>
   <App />
-</ThemesProvider>
+</ThemeProvider>
 ```
 
-If you'd like your themed components to use another `colorScheme` than the default one you can wrap your component in a `div` with the relevant `colorScheme` class, just make sure not to nest those divs because there be dragons (it'll cause problems).
-
-*👉 To keep things simple, you should probably also avoid providing the legacy theme to a ThemeProvider. It'll work, but it could lead to strange situations where you can switch themes, but not colorSchemes (because you cannot nest those).*
+👉 If you'd like your themed components to use another `colorScheme` than the current one, you should swap to a nonlegacy theme. Wrapping components in a `<div className='colorScheme colorScheme--brand'>` will work but you may not nest these `div`s. This can be counter-intuitive, because regular themes can be nested as you see fit, leading to unexpected bugs.
 
 ## Example
-*👉 For a more complete example, check the example directory in the Github repo.*
+For a more complete example, check the example directory in the Github repo.
 
 `themes/contrast.css`
 ```css
@@ -152,25 +146,14 @@ function Component() {
 import { themes } from '/themes'
 export default function AppWithProviders() {
   return (
-    <ThemesProvider default={themes.legacy} {...{ themes }}>
+    <ThemeProvider theme={themes.legacy}>
       <App />
-    </ThemesProvider>
+    </ThemeProvider>
   )
 }
 ```
 
 # Reference
-
-## `ThemesProvider`
-Wrap this around your `App`. This enables the `useThemes` hook. This automatically wraps your `App` in a `ThemeProvider`, using the default theme you provide.
-
-| Props | |
-| --- | --- |
-| `themes` (required) | An object with all available themes. |
-| `default` (required) | The default theme (from the same object). |
-
-## `useThemes`
-Returns the object with the available `themes`.
 
 ## `ThemeProvider`
 Wrap this around a subtree, to render all children in the theme passed to the `theme` prop.
