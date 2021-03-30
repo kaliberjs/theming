@@ -1,1 +1,1 @@
-export { hello } from './src/hello'
+export { ThemeProvider, useTheme } from './src/Theme'
