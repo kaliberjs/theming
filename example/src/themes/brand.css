@@ -1,5 +1,5 @@
 .backgroundColor {
-  background-color: var(--color-shocking-pink);
+  background-color: var(--color-pink-500);
 }
 
 .color {
@@ -7,7 +7,19 @@
 }
 
 .accentColor {
-  color: var(--color-shocking-pink-accent);
+  color: var(--color-cyan-100);
+}
+
+.accentColorContrast {
+  color: var(--color-white);
+}
+
+.secondaryColor {
+  color: var(--color-white);
+}
+
+.secondaryColorContrast {
+  color: var(--color-cyan-100);
 }
 
 .focusColor {

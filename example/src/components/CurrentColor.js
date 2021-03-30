@@ -1,7 +1,7 @@
-import { useTheme, useThemes } from '@kaliber/theming'
+import { useTheme } from '@kaliber/theming'
+import { themes } from '/themes'
 
 export function CurrentColor() {
-  const themes = useThemes()
   const theme = useTheme()
 
   return (

@@ -1,4 +1,4 @@
-import { ThemesProvider } from '@kaliber/theming'
+import { ThemeProvider } from '@kaliber/theming'
 import { themes } from '/themes'
 import { ThemeBrand, ThemeContrast, ThemeDefault } from '/components/Theme'
 import { Box } from '/components/box/Box'
@@ -8,9 +8,9 @@ import styles from './App.css'
 
 export default function AppWithProviders() {
   return (
-    <ThemesProvider default={themes.legacy} {...{ themes }}>
+    <ThemeProvider theme={themes.legacy}>
       <App />
-    </ThemesProvider>
+    </ThemeProvider>
   )
 }
 

@@ -92,13 +92,13 @@ If you'd like your themed components to use another `colorScheme` than the defau
 } 
 
 .accentColor {
-  color: var(--color-shocking-pink);
+  color: var(--color-pink-500);
 }
 
 .focusColor {
   &:hover,
   &:focus {
-    color: var(--color-shocking-pink);
+    color: var(--color-pink-500);
   }
 }
 
